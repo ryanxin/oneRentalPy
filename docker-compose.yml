@@ -1,0 +1,17 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: ${MYSQL_CONTAINER_NAME}
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "${MYSQL_PORT}:3306"
+    volumes:
+      - ${MYSQL_CONF}:/etc/mysql/conf.d:rw
+      - ${MYSQL_DATA}:/var/lib/mysql/:rw  #include mysql log
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      TZ: "$TZ"
+    networks:
+      - ${NETWORK}
